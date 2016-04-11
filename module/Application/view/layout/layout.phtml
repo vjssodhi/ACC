@@ -1,0 +1,174 @@
+<?php
+use Zend\Session\Container;
+
+echo $this->doctype ();
+?>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+        <?php
+								
+								echo $this->headTitle ( 'Employee ' . $this->translate ( 'Evaluation' ) )->setSeparator ( ' - ' )->setAutoEscape ( false )?>
+        <?php
+								echo $this->headMeta ()->appendName ( 'viewport', 'width=device-width, initial-scale=1.0' )->appendHttpEquiv ( 'X-UA-Compatible', 'IE=edge' );
+								echo $this->headLink ( array (
+										'rel' => 'shortcut icon',
+										'type' => 'image/vnd.microsoft.icon',
+										'href' => $this->basePath () . '/img/favicon.ico' 
+								) )->prependStylesheet ( $this->basePath ( 'css/style.css' ) )->prependStylesheet ( $this->basePath ( 'css/bootstrap-theme.min.css' ) )->prependStylesheet ( $this->basePath ( 'css/bootswatch/paper/bootstrap.min.css' ) );
+								echo $this->headLink ()->prependStylesheet ( $this->basePath () . '/fontawesome/css/font-awesome.css' );
+								?>
+        <!-- Scripts -->
+        <?php
+								echo $this->headScript ()->prependFile ( $this->basePath ( 'js/bootstrap.min.js' ) )->prependFile ( $this->basePath ( 'js/jquery.min.js' ) )->prependFile ( $this->basePath ( 'js/respond.min.js' ), 'text/javascript', array (
+										'conditional' => 'lt IE 9' 
+								) )->prependFile ( $this->basePath ( 'js/html5shiv.min.js' ), 'text/javascript', array (
+										'conditional' => 'lt IE 9' 
+								) );
+								?>
+    </head>
+    <?php
+				if ($this->identity ()) {
+					$userInfoContainer = new Container ( USER_INFO_CONTAINER_NAME );
+					$allInfo = $userInfoContainer->allInfo;
+					$accessLevel = $userInfoContainer->accessLevel;
+				}
+				?>
+<body is="empEvalBody876">
+
+	<nav id="empEvalNav876" class="navbar navbar-inverse navbar-fixed-top"
+		role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#user-mod-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<!-- 			<a class="navbar-brand" href="#">Logo</a> -->
+		</div>
+		<div class="container">
+			<div class="collapse navbar-collapse" id="user-mod-navbar-collapse">
+				<ul class="nav navbar-nav navbar-left">
+				<?php
+				if ($this->identity ()) {
+					?>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-user"></i><i
+							class="fa fa-caret-square-o-down fa-fw"></i></a>
+						<ul class="dropdown-menu">
+							<li><a href="/user/dashboard"></i>Dashboard</a></li>
+							<li></li>
+						</ul></li>
+						<?php
+					switch ($accessLevel) {
+						case 7 :
+							?>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">Admin<i
+							class="fa fa-caret-square-o-down fa-fw"></i><i
+							class="fa fa-shield"></i></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/adduser"></i>Add User</a></li>
+							<li><a href="/admin/removeuser"></i>Remove User</a></li>
+							<li><a href="/admin/listusers"></i>List Users</a></li>
+							<li></li>
+						</ul></li>
+								<?php
+							
+							break;
+						default :
+							;
+							break;
+					}
+					?>
+						<?php
+				} else {
+					?>
+			<li><a href="/anonymous/signup"></i>Sign Up</a></li>
+					<li><a href="/anonymous/signin"></i>Sign In</a></li>
+					</li>
+				<?php }?>
+				</ul>
+					<?php
+					if ($this->identity ()) {
+						?>
+						<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-cog fa-fw"></i>
+						<?php echo $userInfoContainer->allInfo['personalEmailId']?></a>
+						<ul class="dropdown-menu">
+							<li><a href="/user/signout">Sign Out</a></li>
+						</ul></li>
+				</ul>
+						<?php
+					}
+					?>
+				
+			</div>
+		</div>
+
+	</nav>
+	<div class="container" id="empEvalViewContentContaner9001">
+            <?php echo $this->content; ?>
+            <hr>
+		<footer> Employee Evaluation Software </footer>
+	</div>
+	<!-- /container -->
+        <?php echo $this->inlineScript()?>
+        <script type="text/javascript">
+        (function() {
+			
+			var navBarObj = document.getElementById('empEvalNav876');
+			var heightOfNavigationBar = navBarObj.offsetHeight;
+									navBarObj.style.marginTop =  2 + 'px';
+			var contentContainerObj = document
+				.getElementById('empEvalViewContentContaner9001');
+			var contentContainerTopOffset = heightOfNavigationBar;
+			contentContainerObj.style.marginTop = (contentContainerTopOffset) + 'px';
+		})();
+		$('a[href="/' + window.location.pathname.substr(1) + '"]').parent()
+			.toggleClass("active");
+        </script>
+	<style>
+.myBorders {
+	border-radius: 1em;
+	-webkit-box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+	-moz-box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+	box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+}
+
+.myBordersFlat {
+	border-radius: 1em;
+	background:
+		url("<?php echo $this->basepath ( '/images/main_texture.jpg' );?>")
+		repeat;
+	-webkit-box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+	-moz-box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+	box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+	-webkit-box-shadow: 0 0.125em 0.250em #606060, 0 0.125em 0.125em #606060;
+}
+
+.needSpace {
+	margin: 1em 1em 1em 1em;
+}
+
+.myBordersInset {
+	border: 2px solid;
+	border-radius: 1em;
+	-webkit-box-shadow: inset 0 0.125em 0.250em #A0A0A0, 0 0.125em 0.125em
+		#A0A0A0;
+	-moz-box-shadow: inset 0 0.125em 0.250em #A0A0A0, 0 0.125em 0.125em
+		#A0A0A0;
+	box-shadow: inset 0 0.125em 0.250em #A0A0A0, 0 0.125em 0.125em #A0A0A0;
+}
+
+form ul li {
+	color: #A00000;
+}
+</style>
+
+
+</body>
+</html>
